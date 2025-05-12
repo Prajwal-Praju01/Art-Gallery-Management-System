@@ -1,0 +1,24 @@
+import cv2
+from pyzbar.pyzbar import decode
+
+# Function to decode QR code
+def read_qr_code(image):
+    barcodes = decode(image)
+    for barcode in barcodes:
+        barcodeData = barcode.data.decode("utf-8")
+        print(barcodeData)
+
+# Access the webcam for real-time QR code scanning
+cap = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = cap.read()
+    read_qr_code(frame)
+    cv2.imshow('QR Code Scanner', frame)
+    
+    if cv2.waitKey(1) & 0xFF == 27:  # Press 'Esc' to exit
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
